@@ -3,13 +3,11 @@ name: Deploy .NET Core to Azure
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'src/PreparatoriaIIM.API/**'
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: 'app-iim-backend-api-prod-3386'  # Nombre de tu App Service en Azure
-  DOTNET_VERSION: '7.0.x'                     # Versión de .NET a usar
+  AZURE_WEBAPP_NAME: 'app-iim-backend-api-prod-3386'
+  DOTNET_VERSION: '6.0.x'
 
 jobs:
   build-and-deploy:
@@ -17,10 +15,9 @@ jobs:
     environment: production
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
     
-    - name: Setup .NET Core
+    - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
