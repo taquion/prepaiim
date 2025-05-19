@@ -1,3 +1,5 @@
+# Workflow para desplegar la aplicación .NET Core en Azure
+# Última actualización: 18/05/2024 23:08
 name: Deploy .NET Core to Azure
 
 on:
