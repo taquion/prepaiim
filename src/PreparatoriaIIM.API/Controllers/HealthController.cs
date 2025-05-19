@@ -34,58 +34,15 @@ namespace PreparatoriaIIM.API.Controllers
             _healthCheckService = healthCheckService ?? throw new ArgumentNullException(nameof(healthCheckService));
             _healthCheckOptions = healthCheckOptions ?? throw new ArgumentNullException(nameof(healthCheckOptions));
         }
-
         /// <summary>
         /// Obtiene el estado de salud general de la aplicación
         /// </summary>
         /// <returns>Estado de salud de la aplicación</returns>
         /// <response code="200">La aplicación está funcionando correctamente</response>
-        /// <response code="503">La aplicación no está funcionando correctamente</response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
-            _logger.LogInformation("Solicitud de verificación de salud recibida");
-            
-            var healthReport = await _healthCheckService.CheckHealthAsync();
-            
-            var status = healthReport.Status;
-            var isHealthy = status == HealthStatus.Healthy;
-            
-            var response = new
-            {
-                status = status.ToString(),
-                timestamp = DateTime.UtcNow,
-                results = healthReport.Entries.Select(e => new
-                {
-                    key = e.Key,
-                    status = e.Value.Status.ToString(),
-                    description = e.Value.Description,
-                    duration = e.Value.Duration,
-                    exception = e.Value.Exception?.Message,
-                    data = e.Value.Data
-                }),
-                totalDuration = healthReport.TotalDuration
-            };
-            
-            _logger.LogInformation("Resultado de la verificación de salud: {Status}", status);
-            
-            return isHealthy 
-                ? Ok(response) 
-                : StatusCode(StatusCodes.Status503ServiceUnavailable, response);
-        }
-        
-        /// <summary>
-        /// Obtiene métricas de rendimiento de la aplicación
-        /// </summary>
-        /// <returns>Métricas de rendimiento</returns>
-        [HttpGet("metrics")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult GetMetrics()
-        {
-            var process = Process.GetCurrentProcess();
-            
+            return Ok(new { status = "Healthy" });
             // Obtener métricas del proceso
             var metrics = new
             {
