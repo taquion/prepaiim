@@ -27,7 +27,7 @@ namespace PreparatoriaIIM.Infrastructure.Data
         public DbSet<Pago> Pagos { get; set; }
         public DbSet<RelacionPadreAlumno> RelacionesPadreAlumno { get; set; }
         public DbSet<RelacionPagoCargo> RelacionesPagoCargo { get; set; }
-        public DbSet<Rol> Roles { get; set; }
+        public DbSet<IdentityRole<Guid>> Roles { get; set; }
         public DbSet<Tetramestre> Tetramestres { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
 

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using iText.Kernel.Pdf;
 using iText.Layout;
@@ -16,7 +18,129 @@ namespace PreparatoriaIIM.Infrastructure.Services
 
         public PdfReportService(ILogger<PdfReportService> logger)
         {
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
+        public async Task<byte[]> GenerateStudentReportAsync(StudentReportData data)
+        {
+            if (data == null) throw new ArgumentNullException(nameof(data));
+
+            try
+            {
+                using (var memoryStream = new MemoryStream())
+                using (var writer = new PdfWriter(memoryStream))
+                using (var pdf = new PdfDocument(writer))
+                using (var document = new Document(pdf))
+                {
+                    // Título del documento
+                    document.Add(new Paragraph("Reporte de Calificaciones")
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetFontSize(20));
+
+                    // Información del estudiante
+                    document.Add(new Paragraph($"Estudiante: {data.StudentName}"));
+                    document.Add(new Paragraph($"Matrícula: {data.StudentId}"));
+                    document.Add(new Paragraph($"Programa: {data.Program}"));
+                    document.Add(new Paragraph($"Semestre: {data.Semester}\n"));
+
+                    // Tabla de calificaciones
+                    var table = new Table(UnitValue.CreatePercentArray(new float[] { 3, 2, 3, 2 }))
+                        .UseAllAvailableWidth();
+
+                    // Encabezados de la tabla
+                    table.AddHeaderCell("Materia");
+                    table.AddHeaderCell("Código");
+                    table.AddHeaderCell("Calificación");
+                    table.AddHeaderCell("Estado");
+
+                    // Filas de la tabla
+                    if (data.Subjects != null)
+                    {
+                        foreach (var subject in data.Subjects)
+                        {
+                            table.AddCell(subject.Name ?? string.Empty);
+                            table.AddCell(subject.Code ?? string.Empty);
+                            table.AddCell(subject.Grade.ToString("0.00"));
+                            table.AddCell(subject.Status ?? string.Empty);
+                        }
+                    }
+
+                    document.Add(table);
+
+                    // Promedio general
+                    document.Add(new Paragraph($"\nPromedio General: {data.AverageGrade:0.00}")
+                        .SetBold()
+                        .SetTextAlignment(TextAlignment.RIGHT));
+
+                    document.Close();
+                    return memoryStream.ToArray();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al generar el reporte de calificaciones");
+                throw;
+            }
+        }
+
+        public async Task<byte[]> GeneratePaymentReceiptAsync(PaymentReceiptData data)
+        {
+            if (data == null) throw new ArgumentNullException(nameof(data));
+
+            try
+            {
+                using (var memoryStream = new MemoryStream())
+                using (var writer = new PdfWriter(memoryStream))
+                using (var pdf = new PdfDocument(writer))
+                using (var document = new Document(pdf))
+                {
+                    // Encabezado
+                    document.Add(new Paragraph("COMPROBANTE DE PAGO")
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetFontSize(18)
+                        .SetBold());
+
+                    // Información del recibo
+                    document.Add(new Paragraph($"Número de Recibo: {data.ReceiptNumber}"));
+                    document.Add(new Paragraph($"Fecha: {data.PaymentDate:dd/MM/yyyy HH:mm}"));
+                    document.Add(new Paragraph($"Estudiante: {data.StudentName}"));
+                    document.Add(new Paragraph($"Matrícula: {data.StudentId}\n"));
+
+                    // Detalles del pago
+                    document.Add(new Paragraph("Detalles del Pago:")
+                        .SetBold());
+                    
+                    var table = new Table(UnitValue.CreatePercentArray(new float[] { 4, 1 }))
+                        .UseAllAvailableWidth();
+
+                    table.AddCell(new Cell().Add(new Paragraph("Concepto").SetBold()));
+                    table.AddCell(new Cell().Add(new Paragraph("Monto").SetBold()));
+
+                    table.AddCell(data.PaymentConcept);
+                    table.AddCell($"${data.Amount:0.00}");
+
+                    document.Add(table);
+
+                    // Información adicional
+                    document.Add(new Paragraph($"\nMétodo de Pago: {data.PaymentMethod}"));
+                    document.Add(new Paragraph($"Número de Referencia: {data.ReferenceNumber}"));
+                    document.Add(new Paragraph($"Estado: {data.Status}"));
+
+                    // Pie de página
+                    document.Add(new Paragraph("\n\nEste es un comprobante generado electrónicamente.")
+                        .SetFontSize(8)
+                        .SetTextAlignment(TextAlignment.CENTER)
+                        .SetItalic());
+
+                    document.Close();
+                    return memoryStream.ToArray();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al generar el comprobante de pago");
+                throw;
+            }
         }
 
         public async Task<byte[]> GenerateStudentReportAsync(StudentReportData data)

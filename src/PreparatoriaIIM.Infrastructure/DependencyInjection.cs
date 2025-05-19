@@ -8,11 +8,11 @@ using PreparatoriaIIM.Application.Common.Interfaces;
 using PreparatoriaIIM.Domain.Entities;
 using PreparatoriaIIM.Infrastructure.Data;
 using PreparatoriaIIM.Infrastructure.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using System.Text.Json.Serialization;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace PreparatoriaIIM.Infrastructure
 {
@@ -80,30 +80,93 @@ namespace PreparatoriaIIM.Infrastructure
                         .AllowCredentials());
             });
 
-            // Configuración de Swagger con autenticación
+            // Configuración de Swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Preparatoria IIM API", Version = "v1" });
                 
-                c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                // Configuración de autenticación JWT en Swagger
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Type = SecuritySchemeType.OAuth2,
-                    Flows = new OpenApiOAuthFlows
+                    Description = "JWT Authorization header using the Bearer scheme.\r\n\r\n" +
+                                  "Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\n" +
+                                  "Example: \"Bearer 12345abcdef\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
                     {
-                        Implicit = new OpenApiOAuthFlow
+                        new OpenApiSecurityScheme
                         {
-                            AuthorizationUrl = new Uri($"https://login.microsoftonline.com/{configuration["AzureAd:TenantId"]}/oauth2/v2.0/authorize"),
-                            TokenUrl = new Uri($"https://login.microsoftonline.com/{configuration["AzureAd:TenantId"]}/oauth2/v2.0/token"),
-                            Scopes = new Dictionary<string, string>
+                            Reference = new OpenApiReference
                             {
-                                { $"api://{configuration["AzureAd:ClientId"]}/access_as_user", "Access API as user" }
-                            }
-                        }
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+                        },
+                        new List<string>()
                     }
                 });
 
+                // Configuración de operaciones
                 c.OperationFilter<SecurityRequirementsOperationFilter>();
             });
+
+            // Configuración de servicios de infraestructura
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IPdfReportService, PdfReportService>();
+            services.AddScoped<IStorageService, AzureBlobStorageService>();
+            
+            // Configuración del sistema de logging personalizado
+            services.AddLogging(logging =>
+            {
+                logging.ClearProviders();
+                logging.AddConsole();
+                logging.AddDebug();
+                logging.AddFile();
+                
+                // Configuración de niveles de log por categoría
+                logging.AddFilter("Microsoft", LogLevel.Warning);
+                logging.AddFilter("System", LogLevel.Warning);
+                logging.AddFilter("Microsoft.Hosting.Lifetime", LogLevel.Information);
+                logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.Warning);
+            });
+            
+            // Configuración de opciones del logger de archivo
+            services.Configure<FileLoggerOptions>(configuration.GetSection("Logging:File"));
+        
+            // Configurar cliente de Azure Blob Storage
+            services.AddSingleton(provider =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                var connectionString = configuration.GetConnectionString("AzureStorage") ?? 
+                                     configuration["AzureStorage:ConnectionString"];
+                
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    var logger = provider.GetRequiredService<ILogger<AzureBlobStorageService>>();
+                    logger.LogWarning("No se encontró la cadena de conexión de Azure Storage. Se usará la configuración por defecto.");
+                    
+                    var accountName = configuration["AzureStorage:AccountName"] ?? "stiimprepaprod64110";
+                    var accountKey = configuration["AzureStorage:AccountKey"] ?? "[TU_ACCOUNT_KEY]";
+                    
+                    var storageCredentials = new Azure.Storage.StorageSharedKeyCredential(accountName, accountKey);
+                    var blobUri = new Uri($"https://{accountName}.blob.core.windows.net");
+                    return new BlobServiceClient(blobUri, storageCredentials);
+                }
+                
+                return new BlobServiceClient(connectionString);
+            });
+            
+            // Configuración de EmailSettings
+            services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
             // Configuración de controladores con JSON serialization
             services.AddControllers()

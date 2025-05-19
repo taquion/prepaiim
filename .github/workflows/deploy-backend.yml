@@ -1,5 +1,4 @@
-# Workflow para desplegar la aplicación .NET Core en Azure Web App
-name: Deploy .NET Core App to Azure Web App
+name: Deploy .NET Core to Azure
 
 on:
   push:
@@ -7,6 +6,10 @@ on:
     paths:
       - 'src/PreparatoriaIIM.API/**'
   workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: 'app-iim-backend-api-prod-3386'  # Nombre de tu App Service en Azure
+  DOTNET_VERSION: '8.0.x'                     # Versión de .NET a usar
 
 jobs:
   build-and-deploy:
@@ -16,45 +19,23 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+    
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.x'
-        
-    - name: Build with dotnet
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: Build and publish
       working-directory: ./src/PreparatoriaIIM.API
       run: |
         dotnet restore
         dotnet build --configuration Release --no-restore
-        dotnet publish -c Release -o ${{ github.workspace }}/publish_output
-        
-    - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v4
-      with:
-        name: .net-app
-        path: ${{ github.workspace }}/publish_output
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build-and-deploy
-    environment: production
+        dotnet publish -c Release -o ${{ github.workspace }}/publish
     
-    steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v4
-      with:
-        name: .net-app
-        
-    - name: Login to Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'app-iim-backend-api-prod-3386'
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
         slot-name: 'Production'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        package: .
+        package: ${{ github.workspace }}/publish

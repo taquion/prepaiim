@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PreparatoriaIIM.Application.Common.Interfaces;
+using System.Threading;
+using MimeKit;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 
 namespace PreparatoriaIIM.Infrastructure.Services
 {
@@ -26,8 +30,58 @@ namespace PreparatoriaIIM.Infrastructure.Services
 
         public EmailService(IOptions<EmailSettings> emailSettings, ILogger<EmailService> logger)
         {
-            _emailSettings = emailSettings.Value;
-            _logger = logger;
+            _emailSettings = emailSettings?.Value ?? throw new ArgumentNullException(nameof(emailSettings));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
+        public async Task SendEmailAsync(string to, string subject, string body, bool isHtml = false, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrWhiteSpace(to))
+                throw new ArgumentException("El destinatario no puede estar vacío", nameof(to));
+            if (string.IsNullOrWhiteSpace(subject))
+                throw new ArgumentException("El asunto no puede estar vacío", nameof(subject));
+            if (string.IsNullOrWhiteSpace(body))
+                throw new ArgumentException("El cuerpo del mensaje no puede estar vacío", nameof(body));
+
+            try
+            {
+                var email = new MimeMessage();
+                email.From.Add(new MailboxAddress(_emailSettings.FromName, _emailSettings.FromEmail));
+                email.To.Add(MailboxAddress.Parse(to));
+                email.Subject = subject;
+
+                var builder = new BodyBuilder();
+                if (isHtml)
+                {
+                    builder.HtmlBody = body;
+                }
+                else
+                {
+                    builder.TextBody = body;
+                }
+
+                email.Body = builder.ToMessageBody();
+
+                using (var client = new SmtpClient())
+                {
+                    await client.ConnectAsync(_emailSettings.SmtpServer, _emailSettings.Port, SecureSocketOptions.StartTls, cancellationToken);
+                    
+                    if (!string.IsNullOrEmpty(_emailSettings.Username) && !string.IsNullOrEmpty(_emailSettings.Password))
+                    {
+                        await client.AuthenticateAsync(_emailSettings.Username, _emailSettings.Password, cancellationToken);
+                    }
+                    
+                    await client.SendAsync(email, cancellationToken);
+                    await client.DisconnectAsync(true, cancellationToken);
+                }
+
+                _logger.LogInformation("Correo electrónico enviado exitosamente a {To} con asunto: {Subject}", to, subject);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al enviar el correo electrónico a {To}", to);
+                throw;
+            }
         }
 
         public async Task SendEmailAsync(string to, string subject, string body, bool isHtml = true)

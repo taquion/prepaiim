@@ -48,7 +48,7 @@ namespace PreparatoriaIIM.API.Controllers
         {
             try
             {
-                var stream = await _blobStorage.DownloadFileAsync(containerName, fileName);
+                var stream = await _storageService.DownloadFileAsync(containerName, fileName);
                 
                 if (stream == null)
                     return NotFound("Archivo no encontrado");
@@ -58,14 +58,51 @@ namespace PreparatoriaIIM.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error al descargar el archivo {fileName}");
-                return StatusCode(500, "Error interno al descargar el archivo");
+                _logger.LogError(ex, "Error al descargar el archivo {FileName}", fileName);
+                return StatusCode(500, ApiResponse<object>.Failure("Error interno al descargar el archivo"));
+            }
+        }
+
+        [HttpGet("url/{fileName}")]
+        [ProducesResponseType(typeof(ApiResponse<FileUrlResponse>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<object>), 404)]
+        [ProducesResponseType(typeof(ApiResponse<object>), 500)]
+        public async Task<IActionResult> GetFileUrl(string fileName, string containerName = null, int expiryInHours = 1)
+        {
+            try
+            {
+                var targetContainerName = string.IsNullOrEmpty(containerName) ? DefaultContainerName : containerName.ToLower();
+                var expiryTime = TimeSpan.FromHours(expiryInHours > 0 ? expiryInHours : 1);
+                
+                var fileUrl = await _storageService.GetFileUrlAsync(targetContainerName, fileName, expiryTime);
+                
+                if (fileUrl == null)
+                    return NotFound(ApiResponse<object>.Failure("Archivo no encontrado"));
+                    
+                _logger.LogInformation("URL generada para el archivo {FileName} del contenedor {ContainerName}", 
+                    fileName, targetContainerName);
+                
+                var response = new FileUrlResponse
+                {
+                    FileName = fileName,
+                    FileUrl = fileUrl.ToString(),
+                    ExpiresAt = DateTime.UtcNow.Add(expiryTime)
+                };
+                
+                return Ok(ApiResponse<FileUrlResponse>.Success(response));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al generar la URL para el archivo {FileName}", fileName);
+                return StatusCode(500, ApiResponse<object>.Failure("Error al generar la URL del archivo"));
             }
         }
 
         [HttpDelete("{fileName}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteFile(string fileName, string containerName = "documents")
+        [ProducesResponseType(typeof(ApiResponse<bool>), 200)]
+        [ProducesResponseType(typeof(ApiResponse<object>), 500)]
+        public async Task<IActionResult> DeleteFile(string fileName, string containerName = null)
         {
             try
             {

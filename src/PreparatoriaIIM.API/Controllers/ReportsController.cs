@@ -90,15 +90,7 @@ namespace PreparatoriaIIM.API.Controllers
         }
     }
 
-    // Clases de modelo para los informes
-    public class StudentReportData
-    {
-        public string FullName { get; set; }
-        public string StudentId { get; set; }
-        public string Grade { get; set; }
-        public string Group { get; set; }
-        public SubjectGrade[] Subjects { get; set; }
-        public decimal Average { get; set; }
+    // Clases de modelo para los informes (se mantienen para compatibilidad)
     }
 
     public class SubjectGrade
