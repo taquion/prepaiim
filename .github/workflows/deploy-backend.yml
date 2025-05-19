@@ -9,7 +9,7 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: 'app-iim-backend-api-prod-3386'  # Nombre de tu App Service en Azure
-  DOTNET_VERSION: '8.0.x'                     # Versión de .NET a usar
+  DOTNET_VERSION: '7.0.x'                     # Versión de .NET a usar
 
 jobs:
   build-and-deploy:
