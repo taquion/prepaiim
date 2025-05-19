@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace PreparatoriaIIM.Domain.Entities
 {
-    public class Curso
+    public class Curso : BaseEntity
     {
-        public int CursoID { get; set; }
-        public int MateriaID { get; set; }
-        public int TetramestreID { get; set; }
-        public Guid ProfesorUsuarioID { get; set; } // FK a Usuario.UsuarioID (Rol Profesor)
+        public Guid MateriaId { get; set; }
+        public Guid TetramestreId { get; set; }
+        public Guid ProfesorId { get; set; } // FK a Usuario.UsuarioID (Rol Profesor)
         public string? Grupo { get; set; } // e.g., "A", "B", "Mat-A", "Ves-B"
         public string Turno { get; set; } = string.Empty; // "Matutino", "Vespertino"
         public int? CupoMaximo { get; set; }
         public bool Activo { get; set; } = true;
 
+        // Propiedades de navegación
         public virtual Materia? Materia { get; set; }
         public virtual Tetramestre? Tetramestre { get; set; }
         public virtual Usuario? Profesor { get; set; }

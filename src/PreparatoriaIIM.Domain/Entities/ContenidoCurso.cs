@@ -2,10 +2,9 @@ using System;
 
 namespace PreparatoriaIIM.Domain.Entities
 {
-    public class ContenidoCurso
+    public class ContenidoCurso : BaseEntity
     {
-        public int ContenidoCursoID { get; set; }
-        public int CursoID { get; set; }
+        public Guid CursoId { get; set; }
         public string Titulo { get; set; } = string.Empty;
         public string? Descripcion { get; set; }
         public string TipoContenido { get; set; } = string.Empty; // "Silabo", "Presentacion", "VideoLink", "Documento", "Tarea"
@@ -14,6 +13,7 @@ namespace PreparatoriaIIM.Domain.Entities
         public DateTime FechaPublicacion { get; set; } = DateTime.UtcNow;
         public bool VisibleParaAlumnos { get; set; } = true;
 
+        // Propiedades de navegación
         public virtual Curso? Curso { get; set; }
     }
 }

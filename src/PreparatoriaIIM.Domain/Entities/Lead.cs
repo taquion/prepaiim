@@ -2,9 +2,8 @@ using System;
 
 namespace PreparatoriaIIM.Domain.Entities
 {
-    public class Lead
+    public class Lead : BaseEntity
     {
-        public int LeadID { get; set; }
         public string NombreCompleto { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string? Telefono { get; set; }
@@ -15,8 +14,9 @@ namespace PreparatoriaIIM.Domain.Entities
         public DateTime FechaRegistro { get; set; } = DateTime.UtcNow;
         public string EstadoSeguimiento { get; set; } = "Nuevo"; // "Nuevo", "Contactado", "EnProceso", "Inscrito", "Descartado"
         public string? Notas { get; set; }
-        public Guid? AsignadoAUsuarioID { get; set; } // FK a Usuario.UsuarioID (Staff asignado para seguimiento)
+        public Guid? AsignadoAId { get; set; } // FK a Usuario.Id (Staff asignado para seguimiento)
 
+        // Propiedades de navegación
         public virtual Usuario? AsignadoA { get; set; }
     }
 }

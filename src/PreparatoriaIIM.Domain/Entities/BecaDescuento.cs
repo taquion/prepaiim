@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace PreparatoriaIIM.Domain.Entities
 {
-    public class BecaDescuento
+    public class BecaDescuento : BaseEntity
     {
-        public int BecaDescuentoID { get; set; }
         public string Nombre { get; set; } = string.Empty;
         public string? Descripcion { get; set; }
         public string Tipo { get; set; } = string.Empty; // "Porcentaje", "MontoFijo"
@@ -17,6 +16,7 @@ namespace PreparatoriaIIM.Domain.Entities
         // Podría haber condiciones para su aplicación, ej. "Solo colegiaturas", "Promedio > 9.0"
         public string? CondicionesAplicacion { get; set; }
 
+        // Propiedades de navegación
         public virtual ICollection<BecaDescuentoAplicado> Aplicaciones { get; set; } = new List<BecaDescuentoAplicado>();
     }
 }
