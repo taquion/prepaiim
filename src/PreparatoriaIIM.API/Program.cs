@@ -29,6 +29,25 @@ builder.Services.AddControllers(options =>
     options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
 });
 
+// Configuración de CORS
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins",
+        builder =>
+        {
+            builder.WithOrigins(allowedOrigins)
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
+// Configuración de Swagger
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Preparatoria IIM API", Version = "v1" });
+});
+
 var app = builder.Build();
 
 // Configurar el manejador de excepciones personalizado
@@ -38,34 +57,34 @@ app.UseCustomExceptionHandler();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    
-    // Configuración de Swagger UI
-    app.UseSwagger();
-    app.UseSwaggerUI(c => 
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Preparatoria IIM API v1");
-        c.OAuthClientId(builder.Configuration["AzureAd:ClientId"]);
-        c.OAuthUsePkce();
-        c.OAuthScopeSeparator(" ");
-    });
+}
 
-    // Aplicar migraciones automáticamente en desarrollo
-    using (var scope = app.Services.CreateScope())
+// Habilitar Swagger en todos los entornos
+app.UseSwagger();
+app.UseSwaggerUI(c => 
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Preparatoria IIM API v1");
+    c.OAuthClientId(builder.Configuration["AzureAd:ClientId"]);
+    c.OAuthUsePkce();
+    c.OAuthScopeSeparator(" ");
+});
+
+// Aplicar migraciones automáticamente
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
     {
-        var services = scope.ServiceProvider;
-        try
-        {
-            var context = services.GetRequiredService<ApplicationDbContext>();
-            await context.Database.MigrateAsync();
-            
-            // Aquí puedes agregar datos iniciales si es necesario
-            // await SeedData.Initialize(services);
-        }
-        catch (Exception ex)
-        {
-            var logger = services.GetRequiredService<ILogger<Program>>();
-            logger.LogError(ex, "Ocurrió un error al inicializar la base de datos.");
-        }
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        await context.Database.MigrateAsync();
+        
+        // Aquí puedes agregar datos iniciales si es necesario
+        // await SeedData.Initialize(services);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Ocurrió un error al inicializar la base de datos.");
     }
 }
 
@@ -76,12 +95,6 @@ app.UseCors("AllowSpecificOrigins");
 app.UseOnlineUsersTracking();
 
 app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
-
 app.UseAuthorization();
 
 app.MapControllers();
