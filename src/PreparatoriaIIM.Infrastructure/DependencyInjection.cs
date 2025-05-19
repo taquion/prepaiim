@@ -1,18 +1,7 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Identity.Web;
-using PreparatoriaIIM.Application.Common.Interfaces;
-using PreparatoriaIIM.Domain.Entities;
 using PreparatoriaIIM.Infrastructure.Data;
-using PreparatoriaIIM.Infrastructure.Services;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.AspNetCore.Identity;
-using System.Text.Json.Serialization;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace PreparatoriaIIM.Infrastructure
 {
