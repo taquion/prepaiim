@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -12,11 +13,19 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PreparatoriaIIM.Domain\PreparatoriaIIM.Domain.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Logging\**" />
+    <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="Logging\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Logging\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+
 </Project>
