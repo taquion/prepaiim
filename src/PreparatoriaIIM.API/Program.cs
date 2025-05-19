@@ -18,14 +18,22 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Configure the HTTP request pipeline
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "PreparatoriaIIM API V1");
+    c.RoutePrefix = "swagger";
+});
 
 app.UseHttpsRedirection();
+
+// Configurar ruta base si es necesario
+var basePath = Environment.GetEnvironmentVariable("ASPNETCORE_BASEPATH");
+if (!string.IsNullOrEmpty(basePath))
+{
+    app.UsePathBase(basePath);
+}
 app.UseRouting();
 app.UseAuthorization();
 app.MapControllers();
