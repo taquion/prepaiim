@@ -62,8 +62,11 @@ export default function Landing() {
             Sin educación el mundo te cierra muchas puertas,<br />
             <span className="text-iim-gold">pero nosotros te daremos la llave.</span>
           </h1>
-          <p className="text-lg sm:text-xl text-blue-100 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-blue-100 mb-3 max-w-2xl mx-auto leading-relaxed">
             Bachillerato General de 2 años, incorporado a la SEP desde hace más de 18 años.
+          </p>
+          <p className="text-lg font-semibold text-white mb-10">
+            Inscríbete y asegura tu futuro.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
