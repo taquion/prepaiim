@@ -1,6 +1,7 @@
 import { useAuth } from '../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import { Globe, LogOut } from 'lucide-react'
+import { LogOut } from 'lucide-react'
+import bear from '../assets/bear.jpg'
 
 const roleLabels = {
   admin: '🏛️ Administrativo',
@@ -24,8 +25,13 @@ export default function DashboardLayout({ children, title }) {
       <header className="bg-iim-blue text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-iim-teal flex items-center justify-center">
-              <Globe size={14} className="text-white" />
+            <div className="w-8 h-8 rounded-full bg-iim-teal flex items-center justify-center overflow-hidden">
+              <img
+                src={bear}
+                alt="Prepa IIM"
+                className="w-full h-full object-cover"
+                style={{ mixBlendMode: 'multiply' }}
+              />
             </div>
             <div>
               <div className="font-semibold text-sm leading-tight">Instituto Intercultural Monterrey</div>
