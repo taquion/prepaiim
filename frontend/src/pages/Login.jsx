@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { Globe, ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
+import bearWhite from '../assets/bear_white.png'
 
 export default function Login() {
   const { login } = useAuth()
@@ -30,8 +31,8 @@ export default function Login() {
     <div className="min-h-screen iim-gradient flex flex-col items-center justify-center px-4">
       {/* Logo */}
       <Link to="/" className="mb-8 flex flex-col items-center gap-3 group">
-        <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition">
-          <Globe size={28} className="text-iim-gold" />
+        <div className="w-20 h-20 flex items-center justify-center group-hover:opacity-90 transition">
+          <img src={bearWhite} alt="PrepaIIM" className="w-full h-full object-contain" />
         </div>
         <div className="text-white text-center">
           <div className="text-xl font-bold">Instituto Intercultural</div>
