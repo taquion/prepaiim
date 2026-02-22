@@ -5,11 +5,11 @@ export default {
     extend: {
       colors: {
         iim: {
-          blue: '#2B437F',   // azul marino del oso
-          gold: '#45A2C3',   // azul cyan del círculo del oso
-          teal: '#45A2C3',   // mismo cyan
+          blue: '#2B4480',   // azul marino del oso
+          gold: '#5BBAD5',   // azul cyan del círculo del oso (match logo)
+          teal: '#5BBAD5',   // mismo cyan del logo
           dark: '#1B2D60',   // navy más oscuro (footer/fondos)
-          light: '#5DB8D4',  // cyan más claro
+          light: '#7ECDE0',  // cyan más claro
         },
       },
       fontFamily: {
