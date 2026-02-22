@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Users, BookOpen, CreditCard, ArrowRight, X, CheckCircle } from 'lucide-react'
+import { ArrowRight, X, CheckCircle } from 'lucide-react'
 import logo from '../assets/logo.jpg'
 import bear from '../assets/bear.jpg'
 import sepBadge from '../assets/sep.jpg'
@@ -224,56 +224,6 @@ export default function Landing() {
             alt="Incorporado a la SEP — Autorización RVOE MCBG-010/2022"
             className="w-full h-auto object-contain mx-auto"
           />
-        </div>
-      </section>
-
-      {/* Portal Features */}
-      <section className="py-20 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-iim-blue mb-3">Portal Escolar Integrado</h2>
-            <div className="w-16 h-1 bg-iim-gold mx-auto mb-4"></div>
-            <p className="text-gray-500 max-w-xl mx-auto">
-              Una plataforma unificada para toda la comunidad IIM
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                emoji: '🏛️',
-                title: 'Administrativos',
-                desc: 'Gestión de pagos, adeudos, becas y vista general del plantel.',
-                color: 'border-iim-blue',
-              },
-              {
-                emoji: '👨🏫',
-                title: 'Maestros',
-                desc: 'Subida de contenido, tareas, exámenes y vaciado de calificaciones.',
-                color: 'border-iim-teal',
-              },
-              {
-                emoji: '🎓',
-                title: 'Alumnos',
-                desc: 'Avance por tetramestre, materias, calificaciones y tareas.',
-                color: 'border-iim-gold',
-              },
-              {
-                emoji: '👨👩👧',
-                title: 'Padres',
-                desc: 'Consulta de adeudos, pagos y calificaciones de sus hijos.',
-                color: 'border-iim-light',
-              },
-            ].map((f) => (
-              <div
-                key={f.title}
-                className={`bg-white rounded-xl shadow-sm border-t-4 ${f.color} p-6 hover:shadow-md transition`}
-              >
-                <div className="text-3xl mb-3">{f.emoji}</div>
-                <h3 className="text-lg font-bold text-iim-blue mb-2">{f.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
