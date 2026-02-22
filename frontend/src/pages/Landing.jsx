@@ -181,8 +181,8 @@ export default function Landing() {
               />
             </div>
             <div>
-              <div className="text-lg font-bold leading-tight">Instituto Intercultural</div>
-              <div className="hidden sm:block text-xs text-iim-gold font-medium">Monterrey, Pte.</div>
+              <div className="text-sm sm:text-base font-bold leading-tight">Instituto Intercultural</div>
+              <div className="text-xs text-iim-gold font-medium">Monterrey, Pte.</div>
             </div>
           </div>
           <div className="flex items-center gap-3">
