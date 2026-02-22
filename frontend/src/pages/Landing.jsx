@@ -130,7 +130,7 @@ function InscripcionModal({ onClose }) {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-iim-blue hover:bg-iim-dark text-white font-bold py-3 rounded-lg transition disabled:opacity-60 text-sm"
+                className="w-full bg-iim-teal hover:bg-iim-dark text-white font-bold py-3 rounded-lg transition disabled:opacity-60 text-sm"
               >
                 {loading ? 'Enviando...' : 'Enviar mis datos'}
               </button>
@@ -152,7 +152,15 @@ export default function Landing() {
 
       {/* Franja anuncio */}
       <div className="bg-orange-500 text-white text-center py-2 px-4">
-        <p className="text-xs sm:text-sm font-bold tracking-widest uppercase">
+        {/* Mobile: copy corto */}
+        <p className="sm:hidden text-xs font-bold tracking-widest uppercase">
+          🎓 ¡INSCRIPCIONES ABIERTAS!{' '}
+          <button onClick={() => setModalOpen(true)} className="underline hover:text-orange-100 transition">
+            Inscríbete hoy
+          </button>
+        </p>
+        {/* Desktop: copy completo */}
+        <p className="hidden sm:block text-sm font-bold tracking-widest uppercase">
           🎓 INSCRIPCIONES ABIERTAS — Cupo limitado ·{' '}
           <button onClick={() => setModalOpen(true)} className="underline hover:text-orange-100 transition">
             Inscríbete hoy
@@ -174,7 +182,7 @@ export default function Landing() {
             </div>
             <div>
               <div className="text-lg font-bold leading-tight">Instituto Intercultural</div>
-              <div className="text-xs text-iim-gold font-medium">Monterrey, Pte.</div>
+              <div className="hidden sm:block text-xs text-iim-gold font-medium">Monterrey, Pte.</div>
             </div>
           </div>
           <div className="flex items-center gap-3">
