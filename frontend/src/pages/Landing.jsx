@@ -1,6 +1,14 @@
 import { Link } from 'react-router-dom'
 import { Globe, Users, BookOpen, CreditCard, ArrowRight } from 'lucide-react'
 
+const InstagramIcon = ({ size = 24 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+  </svg>
+)
+
 export default function Landing() {
   return (
     <div className="min-h-screen bg-white">
@@ -16,12 +24,24 @@ export default function Landing() {
               <div className="text-xs text-iim-gold font-medium">Monterrey, Pte.</div>
             </div>
           </div>
-          <Link
-            to="/login"
-            className="bg-iim-gold hover:bg-yellow-500 text-white font-semibold px-5 py-2 rounded-lg transition flex items-center gap-2 text-sm"
-          >
-            Portal Escolar <ArrowRight size={14} />
-          </Link>
+          <div className="flex items-center gap-3">
+            <a
+              href="https://www.instagram.com/prepa_iim/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/80 hover:text-iim-gold transition hidden sm:flex items-center gap-1.5 text-sm"
+              title="Síguenos en Instagram"
+            >
+              <InstagramIcon size={18} />
+              <span className="hidden md:inline">@prepa_iim</span>
+            </a>
+            <Link
+              to="/login"
+              className="bg-iim-gold hover:bg-yellow-500 text-white font-semibold px-5 py-2 rounded-lg transition flex items-center gap-2 text-sm"
+            >
+              Portal Escolar <ArrowRight size={14} />
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -94,7 +114,7 @@ export default function Landing() {
               },
               {
                 icon: <BookOpen size={28} />,
-                emoji: '👨‍🏫',
+                emoji: '👨🏫',
                 title: 'Maestros',
                 desc: 'Subida de contenido, tareas, exámenes y vaciado de calificaciones.',
                 color: 'border-iim-teal',
@@ -108,7 +128,7 @@ export default function Landing() {
               },
               {
                 icon: <CreditCard size={28} />,
-                emoji: '👨‍👩‍👧',
+                emoji: '👨👩👧',
                 title: 'Padres',
                 desc: 'Consulta de adeudos, pagos y calificaciones de sus hijos.',
                 color: 'border-purple-500',
@@ -179,11 +199,43 @@ export default function Landing() {
           <div className="w-16 h-1 bg-iim-gold mx-auto mb-8"></div>
           <p className="text-gray-600 text-lg">Instituto Intercultural Monterrey, Pte.</p>
           <p className="text-gray-500">Monterrey, Nuevo León, México</p>
+
+          {/* Redes sociales */}
+          <div className="mt-10">
+            <h3 className="text-lg font-semibold text-iim-blue mb-5">Síguenos en redes</h3>
+            <div className="flex justify-center">
+              <a
+                href="https://www.instagram.com/prepa_iim/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-6 py-4 shadow-sm hover:shadow-md hover:border-iim-gold transition group"
+              >
+                <span className="text-pink-500 group-hover:scale-110 transition-transform">
+                  <InstagramIcon size={28} />
+                </span>
+                <div className="text-left">
+                  <div className="text-sm font-bold text-gray-800">@prepa_iim</div>
+                  <div className="text-xs text-gray-400">Instagram</div>
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="bg-iim-dark text-blue-200 py-6 text-center text-sm">
+        <div className="flex items-center justify-center gap-4 mb-2">
+          <a
+            href="https://www.instagram.com/prepa_iim/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-300 hover:text-iim-gold transition"
+            title="Instagram @prepa_iim"
+          >
+            <InstagramIcon size={18} />
+          </a>
+        </div>
         <p>© {new Date().getFullYear()} Instituto Intercultural Monterrey — Todos los derechos reservados</p>
       </footer>
     </div>
