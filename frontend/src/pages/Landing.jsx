@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Users, BookOpen, CreditCard, ArrowRight } from 'lucide-react'
+import { Globe, Users, BookOpen, CreditCard, ArrowRight } from 'lucide-react'
 import logo from '../assets/logo.jpg'
 
 const InstagramIcon = ({ size = 24 }) => (
@@ -17,7 +17,9 @@ export default function Landing() {
       <nav className="bg-iim-blue text-white shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
           <div className="flex items-center">
-            <img src={logo} alt="Prepa IIM" className="h-12 w-auto object-contain brightness-0 invert" />
+            <div className="bg-white rounded-xl px-3 py-1 shadow-sm">
+              <img src={logo} alt="Prepa IIM" className="h-10 w-auto object-contain" />
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <a
@@ -44,7 +46,7 @@ export default function Landing() {
       <section className="iim-gradient text-white py-24 px-4">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-sm mb-8 backdrop-blur-sm">
-            <img src={logo} alt="Prepa IIM" className="h-5 w-auto object-contain brightness-0 invert" />
+            <Globe size={14} className="text-iim-gold" />
             <span>Instituto Intercultural Monterrey, Pte.</span>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
@@ -216,9 +218,6 @@ export default function Landing() {
 
       {/* Footer */}
       <footer className="bg-iim-dark text-blue-200 py-6 text-center text-sm">
-        <div className="flex items-center justify-center gap-4 mb-3">
-          <img src={logo} alt="Prepa IIM" className="h-8 w-auto object-contain brightness-0 invert opacity-70" />
-        </div>
         <div className="flex items-center justify-center gap-4 mb-2">
           <a
             href="https://www.instagram.com/prepa_iim/"
