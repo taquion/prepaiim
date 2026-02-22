@@ -208,14 +208,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Stats bar */}
-      <section className="bg-iim-dark text-white py-8 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="text-3xl sm:text-4xl font-extrabold text-iim-gold">18+</div>
-          <div className="text-sm text-blue-200 mt-1">Años de experiencia</div>
-        </div>
-      </section>
-
       {/* Aval SEP */}
       <section className="bg-white py-10 px-4 border-b border-gray-100">
         <div className="max-w-md mx-auto text-center">
