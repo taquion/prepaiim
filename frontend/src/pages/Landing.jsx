@@ -317,9 +317,7 @@ export default function Landing() {
               ¿Por qué estudiar en PrepaIIM?
             </h2>
             <div className="w-16 h-1 bg-orange-500 mx-auto mb-4"></div>
-            <p className="text-gray-500 text-lg max-w-xl mx-auto">
-              No somos una prepa más. Estos son los motivos que nos hacen diferentes.
-            </p>
+
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
