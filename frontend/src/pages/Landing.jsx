@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, X, CheckCircle } from 'lucide-react'
+import { ArrowRight, X, CheckCircle, GraduationCap, Users, Thermometer, Shield, BadgeCheck, HandCoins } from 'lucide-react'
 import logo from '../assets/logo.jpg'
 import bear from '../assets/bear.jpg'
 import bearWhite from '../assets/bear_white.png'
@@ -305,6 +305,78 @@ export default function Landing() {
                 />
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ¿Por qué PrepaIIM? */}
+      <section className="py-20 px-4 bg-gray-50">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-iim-blue mb-3">
+              ¿Por qué estudiar en PrepaIIM?
+            </h2>
+            <div className="w-16 h-1 bg-orange-500 mx-auto mb-4"></div>
+            <p className="text-gray-500 text-lg max-w-xl mx-auto">
+              No somos una prepa más. Estos son los motivos que nos hacen diferentes.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            {/* 1 */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-100 hover:border-iim-teal transition-all duration-200 flex flex-col gap-4">
+              <div className="w-12 h-12 rounded-xl bg-blue-50 text-iim-blue flex items-center justify-center">
+                <GraduationCap size={28} />
+              </div>
+              <h3 className="text-lg font-bold text-iim-blue">Sin examen de admisión</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">No le complicamos las ganas de estudiar a nadie. Si quieres aprender, aquí tienes tu lugar.</p>
+            </div>
+
+            {/* 2 */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-100 hover:border-iim-teal transition-all duration-200 flex flex-col gap-4">
+              <div className="w-12 h-12 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
+                <Users size={28} />
+              </div>
+              <h3 className="text-lg font-bold text-iim-blue">Somos una prepa cercana</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">Aquí no eres un número más. Todos los alumnos pueden hablar con la Directora a un WhatsApp de distancia.</p>
+            </div>
+
+            {/* 3 */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-100 hover:border-iim-teal transition-all duration-200 flex flex-col gap-4">
+              <div className="w-12 h-12 rounded-xl bg-sky-50 text-sky-500 flex items-center justify-center">
+                <Thermometer size={28} />
+              </div>
+              <h3 className="text-lg font-bold text-iim-blue">Salones climatizados</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">Todos nuestros salones cuentan con aire acondicionado para que estudies cómodo sin importar el calor.</p>
+            </div>
+
+            {/* 4 */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-100 hover:border-iim-teal transition-all duration-200 flex flex-col gap-4">
+              <div className="w-12 h-12 rounded-xl bg-green-50 text-green-600 flex items-center justify-center">
+                <Shield size={28} />
+              </div>
+              <h3 className="text-lg font-bold text-iim-blue">Ambiente seguro</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">Contamos con cámaras en todas las áreas y barda perimetral para que tú y tu familia estén tranquilos.</p>
+            </div>
+
+            {/* 5 */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-100 hover:border-iim-teal transition-all duration-200 flex flex-col gap-4">
+              <div className="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                <BadgeCheck size={28} />
+              </div>
+              <h3 className="text-lg font-bold text-iim-blue">Validez oficial SEP</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">Al terminar puedes entrar a cualquier universidad que elijas, pública o privada, en todo el país.</p>
+            </div>
+
+            {/* 6 */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md border border-gray-100 hover:border-iim-teal transition-all duration-200 flex flex-col gap-4">
+              <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center">
+                <HandCoins size={28} />
+              </div>
+              <h3 className="text-lg font-bold text-iim-blue">Precios accesibles y becas</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">¡Tenemos precios accesibles y muchas becas disponibles! La educación no debe ser un lujo.</p>
+            </div>
+
           </div>
         </div>
       </section>
