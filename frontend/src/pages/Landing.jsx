@@ -13,6 +13,19 @@ const InstagramIcon = ({ size = 24 }) => (
   </svg>
 )
 
+const WhatsAppIcon = ({ size = 32 }) => (
+  <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="16" cy="16" r="16" fill="#25D366"/>
+    <path d="M22.5 9.5A9.1 9.1 0 0 0 7.3 20.7L6 26l5.5-1.4a9.1 9.1 0 0 0 4.4 1.1A9.1 9.1 0 0 0 25 16.5 9.1 9.1 0 0 0 22.5 9.5zm-6.6 14a7.6 7.6 0 0 1-3.8-1l-.3-.2-3.2.8.9-3.1-.2-.3a7.6 7.6 0 1 1 6.6 3.8zm4.2-5.7c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.1-.5 0a6.4 6.4 0 0 1-1.9-1.2 7.1 7.1 0 0 1-1.3-1.6c-.1-.2 0-.4.1-.5l.4-.4.2-.3v-.3l-.7-1.7c-.2-.4-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.9 2.9 0 0 0-.9 2.1 5 5 0 0 0 1.1 2.7 11.5 11.5 0 0 0 4.4 3.9c.6.3 1.1.4 1.5.3a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3z" fill="white"/>
+  </svg>
+)
+
+const GoogleMapsIcon = ({ size = 24 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#EA4335"/>
+  </svg>
+)
+
 function InscripcionModal({ onClose }) {
   const [form, setForm] = useState({ nombre: '', telefono: '', secundaria: '' })
   const [loading, setLoading] = useState(false)
@@ -279,37 +292,39 @@ export default function Landing() {
               href="https://wa.me/528124489796"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-5 py-3 shadow-sm hover:shadow-md hover:border-green-400 transition group"
+              className="flex items-center gap-4 bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-sm hover:shadow-md hover:border-green-400 transition"
             >
-              <span className="text-2xl">💬</span>
+              <WhatsAppIcon size={44} />
               <div className="text-left">
-                <div className="text-xs text-gray-400">WhatsApp</div>
-                <div className="text-sm font-bold text-gray-800">812 448 9796</div>
+                <div className="text-xs text-gray-400 font-medium">WhatsApp</div>
+                <div className="text-lg font-bold text-gray-800">812 448 9796</div>
               </div>
             </a>
             <a
               href="tel:8111682424"
-              className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-5 py-3 shadow-sm hover:shadow-md hover:border-iim-teal transition group"
+              className="flex items-center gap-4 bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-sm hover:shadow-md hover:border-iim-teal transition"
             >
-              <span className="text-2xl">📞</span>
+              <span className="text-4xl">📞</span>
               <div className="text-left">
-                <div className="text-xs text-gray-400">Teléfono</div>
-                <div className="text-sm font-bold text-gray-800">811 168 2424</div>
+                <div className="text-xs text-gray-400 font-medium">Teléfono</div>
+                <div className="text-lg font-bold text-gray-800">811 168 2424</div>
               </div>
             </a>
           </div>
 
           {/* Dirección */}
-          <div className="mt-4">
+          <div className="mt-5">
             <a
               href="https://maps.google.com/?q=Ave.+Cabezada+10907,+Col.+Barrio+Acero,+Solidaridad,+Monterrey,+NL"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-iim-teal hover:text-iim-blue transition text-sm font-medium"
+              className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-sm hover:shadow-md hover:border-red-300 transition"
             >
-              <span>📍</span>
-              Ave. Cabezada 10907, Col. Barrio Acero, Solidaridad, Mty., NL
-              <span className="text-xs underline">Ver en Maps</span>
+              <GoogleMapsIcon size={28} />
+              <div className="text-left">
+                <div className="text-xs text-gray-400 font-medium">Dirección · Ver en Google Maps</div>
+                <div className="text-sm font-semibold text-gray-700">Ave. Cabezada 10907, Col. Barrio Acero, Solidaridad, Mty., NL</div>
+              </div>
             </a>
           </div>
 
