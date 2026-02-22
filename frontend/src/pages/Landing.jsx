@@ -199,7 +199,7 @@ export default function Landing() {
             <span className="text-iim-gold">pero nosotros te daremos la llave.</span>
           </h1>
           <p className="text-lg sm:text-xl text-blue-100 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Bachillerato General de 2 años, incorporado a la SEP desde hace más de 18 años.
+            Bachillerato General de 2 años, incorporado a la SEP desde hace más de 18 años. ¡Sin examen de admisión!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
