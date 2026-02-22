@@ -317,7 +317,7 @@ export default function Landing() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <h2 className="text-3xl sm:text-4xl font-extrabold text-iim-blue mb-3">
-              ¿Por qué estudiar en PrepaIIM?
+              ¿Por qué estudiar en Prepa<span className="text-iim-teal">IIM</span>?
             </h2>
             <div className="w-16 h-1 bg-orange-500 mx-auto mb-4"></div>
 
