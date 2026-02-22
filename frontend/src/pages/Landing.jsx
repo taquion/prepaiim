@@ -4,6 +4,11 @@ import { ArrowRight, X, CheckCircle } from 'lucide-react'
 import logo from '../assets/logo.jpg'
 import bear from '../assets/bear.jpg'
 import sepBadge from '../assets/sep.jpg'
+import foto1 from '../assets/foto1.jpg'
+import foto2 from '../assets/foto2.jpg'
+import foto3 from '../assets/foto3.jpg'
+import foto4 from '../assets/foto4.jpg'
+import foto5 from '../assets/foto5.jpg'
 
 const InstagramIcon = ({ size = 24 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -247,17 +252,17 @@ export default function Landing() {
         `}</style>
         <div className="overflow-hidden">
           <div className="photo-strip">
-            {/* Fotos reales × 2 para loop infinito */}
-            {[1, 2, 3, 4, 5, 1, 2, 3, 4, 5].map((n, i) => (
+            {[foto1, foto2, foto3, foto4, foto5, foto1, foto2, foto3, foto4, foto5].map((src, i) => (
               <div
                 key={i}
-                className="flex-shrink-0 mx-2 rounded-xl overflow-hidden bg-iim-blue/10"
-                style={{ width: '260px', height: '180px' }}
+                className="flex-shrink-0 mx-2 rounded-xl overflow-hidden"
+                style={{ width: '280px', height: '190px' }}
               >
-                {/* Placeholder hasta recibir fotos reales */}
-                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-iim-blue/20 to-iim-gold/20 text-iim-blue font-semibold text-sm">
-                  📸 Foto {n}
-                </div>
+                <img
+                  src={src}
+                  alt={`Prepa IIM ${(i % 5) + 1}`}
+                  className="w-full h-full object-cover"
+                />
               </div>
             ))}
           </div>
