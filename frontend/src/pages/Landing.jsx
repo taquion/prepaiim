@@ -150,6 +150,16 @@ export default function Landing() {
       {/* Modal */}
       {modalOpen && <InscripcionModal onClose={() => setModalOpen(false)} />}
 
+      {/* Franja anuncio */}
+      <div className="bg-orange-500 text-white text-center py-2 px-4">
+        <p className="text-xs sm:text-sm font-bold tracking-widest uppercase">
+          🎓 INSCRIPCIONES ABIERTAS — Cupo limitado ·{' '}
+          <button onClick={() => setModalOpen(true)} className="underline hover:text-orange-100 transition">
+            Inscríbete hoy
+          </button>
+        </p>
+      </div>
+
       {/* Navbar */}
       <nav className="bg-iim-blue text-white shadow-lg sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
