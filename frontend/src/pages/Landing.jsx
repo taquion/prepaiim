@@ -229,6 +229,41 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Galería fotográfica — franja auto-scroll */}
+      <section className="py-8 overflow-hidden bg-white">
+        <style>{`
+          @keyframes scroll-left {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .photo-strip {
+            display: flex;
+            width: max-content;
+            animation: scroll-left 18s linear infinite;
+          }
+          .photo-strip:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
+        <div className="overflow-hidden">
+          <div className="photo-strip">
+            {/* Fotos reales × 2 para loop infinito */}
+            {[1, 2, 3, 4, 5, 1, 2, 3, 4, 5].map((n, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 mx-2 rounded-xl overflow-hidden bg-iim-blue/10"
+                style={{ width: '260px', height: '180px' }}
+              >
+                {/* Placeholder hasta recibir fotos reales */}
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-iim-blue/20 to-iim-gold/20 text-iim-blue font-semibold text-sm">
+                  📸 Foto {n}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Values */}
       <section className="py-20 px-4">
         <div className="max-w-5xl mx-auto text-center">
