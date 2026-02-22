@@ -26,11 +26,11 @@ export default function DashboardLayout({ children, title }) {
       <header className="bg-iim-blue text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center overflow-hidden">
+            <div className="w-9 h-9 flex items-center justify-center">
               <img
                 src={bearWhite}
                 alt="Prepa IIM"
-                className="w-full h-full object-contain p-0.5"
+                className="w-full h-full object-contain"
               />
             </div>
             <div>
