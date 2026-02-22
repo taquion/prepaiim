@@ -292,7 +292,7 @@ export default function Landing() {
         `}</style>
         <div className="overflow-hidden">
           <div className="photo-strip">
-            {[foto2, foto3, foto4, foto5, foto2, foto3, foto4, foto5].map((src, i) => (
+            {[foto1, foto2, foto3, foto4, foto5, foto1, foto2, foto3, foto4, foto5].map((src, i) => (
               <div
                 key={i}
                 className="flex-shrink-0 mx-2 rounded-xl overflow-hidden"
