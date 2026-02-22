@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Globe, Users, BookOpen, CreditCard, ArrowRight } from 'lucide-react'
 import logo from '../assets/logo.jpg'
+import sepBadge from '../assets/sep.jpg'
 
 const InstagramIcon = ({ size = 24 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -83,17 +84,20 @@ export default function Landing() {
 
       {/* Stats bar */}
       <section className="bg-iim-dark text-white py-8 px-4">
-        <div className="max-w-4xl mx-auto grid grid-cols-3 gap-4 text-center">
-          {[
-            { value: '10+', label: 'Años de experiencia' },
-            { value: '4', label: 'Roles en el portal' },
-            { value: '100%', label: 'Dedicación académica' },
-          ].map((s) => (
-            <div key={s.label}>
-              <div className="text-2xl sm:text-3xl font-extrabold text-iim-gold">{s.value}</div>
-              <div className="text-xs sm:text-sm text-blue-200 mt-1">{s.label}</div>
-            </div>
-          ))}
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="text-3xl sm:text-4xl font-extrabold text-iim-gold">18+</div>
+          <div className="text-sm text-blue-200 mt-1">Años de experiencia</div>
+        </div>
+      </section>
+
+      {/* Aval SEP */}
+      <section className="bg-white py-10 px-4 border-b border-gray-100">
+        <div className="max-w-md mx-auto text-center">
+          <img
+            src={sepBadge}
+            alt="Incorporado a la SEP — Autorización RVOE MCBG-010/2022"
+            className="w-full h-auto object-contain mx-auto"
+          />
         </div>
       </section>
 
