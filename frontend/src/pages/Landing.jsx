@@ -19,6 +19,12 @@ const InstagramIcon = ({ size = 24 }) => (
   </svg>
 )
 
+const FacebookIcon = ({ size = 24 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+  </svg>
+)
+
 const WhatsAppIcon = ({ size = 32 }) => (
   <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="16" cy="16" r="16" fill="#25D366"/>
@@ -513,7 +519,7 @@ export default function Landing() {
           {/* Redes sociales */}
           <div className="mt-10">
             <h3 className="text-lg font-semibold text-iim-blue mb-5">Síguenos en redes</h3>
-            <div className="flex justify-center">
+            <div className="flex flex-wrap justify-center gap-4">
               <a
                 href="https://www.instagram.com/prepa_iim/"
                 target="_blank"
@@ -526,6 +532,20 @@ export default function Landing() {
                 <div className="text-left">
                   <div className="text-sm font-bold text-gray-800">@prepa_iim</div>
                   <div className="text-xs text-gray-400">Instagram</div>
+                </div>
+              </a>
+              <a
+                href="https://www.facebook.com/InstitutoInterculturalMonterreyPoniente"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-6 py-4 shadow-sm hover:shadow-md hover:border-blue-400 transition group"
+              >
+                <span className="text-blue-600 group-hover:scale-110 transition-transform">
+                  <FacebookIcon size={28} />
+                </span>
+                <div className="text-left">
+                  <div className="text-sm font-bold text-gray-800">PrepaIIM</div>
+                  <div className="text-xs text-gray-400">Facebook</div>
                 </div>
               </a>
             </div>
@@ -557,6 +577,15 @@ export default function Landing() {
             title="Instagram @prepa_iim"
           >
             <InstagramIcon size={18} />
+          </a>
+          <a
+            href="https://www.facebook.com/InstitutoInterculturalMonterreyPoniente"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-300 hover:text-blue-400 transition"
+            title="Facebook PrepaIIM"
+          >
+            <FacebookIcon size={18} />
           </a>
         </div>
         <p>© {new Date().getFullYear()} Instituto Intercultural Monterrey — Todos los derechos reservados</p>
