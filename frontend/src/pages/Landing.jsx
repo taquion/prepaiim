@@ -225,11 +225,11 @@ export default function Landing() {
             {[
               {
                 title: 'Excelencia Académica',
-                desc: 'Compromiso con la calidad educativa y el desarrollo integral de cada alumno.',
+                desc: 'Nuestro compromiso con cada alumno es que logren terminar su preparatoria, en un ambiente seguro y agradable para todos.',
               },
               {
-                title: 'Visión Intercultural',
-                desc: 'Formación con perspectiva global y profundo respeto a la diversidad cultural.',
+                title: 'Visión',
+                desc: 'Darles a nuestros alumnos las herramientas para que puedan tener el futuro con el que ellos han soñado.',
               },
               {
                 title: 'Comunidad',
