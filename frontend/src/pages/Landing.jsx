@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Users, BookOpen, CreditCard, ArrowRight } from 'lucide-react'
+import { Users, BookOpen, CreditCard, ArrowRight, X, CheckCircle } from 'lucide-react'
 import logo from '../assets/logo.jpg'
 import bear from '../assets/bear.jpg'
 import sepBadge from '../assets/sep.jpg'
@@ -12,11 +13,127 @@ const InstagramIcon = ({ size = 24 }) => (
   </svg>
 )
 
+function InscripcionModal({ onClose }) {
+  const [form, setForm] = useState({ nombre: '', telefono: '', secundaria: '' })
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    try {
+      const res = await fetch('/api/inscripciones', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error('Error al enviar')
+      setSuccess(true)
+    } catch {
+      setError('Hubo un problema. Intenta de nuevo.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center px-4" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div
+        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md p-8"
+        onClick={e => e.stopPropagation()}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition"
+        >
+          <X size={20} />
+        </button>
+
+        {success ? (
+          <div className="text-center py-6">
+            <CheckCircle size={56} className="text-iim-teal mx-auto mb-4" />
+            <h3 className="text-xl font-bold text-iim-blue mb-2">¡Listo!</h3>
+            <p className="text-gray-600 mb-6">Recibimos tus datos. Pronto nos pondremos en contacto contigo.</p>
+            <button
+              onClick={onClose}
+              className="bg-iim-blue text-white px-6 py-2 rounded-lg hover:bg-iim-dark transition"
+            >
+              Cerrar
+            </button>
+          </div>
+        ) : (
+          <>
+            <div className="text-center mb-6">
+              <img src={logo} alt="Prepa IIM" className="h-12 w-auto object-contain mx-auto mb-3" />
+              <h2 className="text-2xl font-bold text-iim-blue">Inscríbete</h2>
+              <p className="text-gray-500 text-sm mt-1">Déjanos tus datos y te contactamos</p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Tu nombre"
+                  value={form.nombre}
+                  onChange={e => setForm({ ...form, nombre: e.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iim-teal focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                <input
+                  type="tel"
+                  required
+                  placeholder="81 1234 5678"
+                  value={form.telefono}
+                  onChange={e => setForm({ ...form, telefono: e.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iim-teal focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Secundaria de procedencia</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Nombre de tu secundaria"
+                  value={form.secundaria}
+                  onChange={e => setForm({ ...form, secundaria: e.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-iim-teal focus:border-transparent"
+                />
+              </div>
+
+              {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-iim-blue hover:bg-iim-dark text-white font-bold py-3 rounded-lg transition disabled:opacity-60 text-sm"
+              >
+                {loading ? 'Enviando...' : 'Enviar mis datos'}
+              </button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
 export default function Landing() {
+  const [modalOpen, setModalOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-white">
+      {/* Modal */}
+      {modalOpen && <InscripcionModal onClose={() => setModalOpen(false)} />}
+
       {/* Navbar */}
-      <nav className="bg-iim-blue text-white shadow-lg sticky top-0 z-50">
+      <nav className="bg-iim-blue text-white shadow-lg sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-iim-teal flex items-center justify-center overflow-hidden">
@@ -57,10 +174,10 @@ export default function Landing() {
       <section className="iim-gradient text-white py-20 px-4">
         <div className="max-w-5xl mx-auto text-center">
 
-          {/* Logo visible sobre fondo oscuro en tarjeta blanca */}
+          {/* Logo más grande */}
           <div className="flex justify-center mb-8">
-            <div className="bg-white rounded-2xl shadow-xl px-8 py-4 inline-block">
-              <img src={logo} alt="Prepa IIM" className="h-20 w-auto object-contain" />
+            <div className="bg-white rounded-2xl shadow-xl px-10 py-6 inline-block">
+              <img src={logo} alt="Prepa IIM" className="h-28 w-auto object-contain" />
             </div>
           </div>
 
@@ -75,12 +192,12 @@ export default function Landing() {
             Inscríbete y asegura tu futuro.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/login"
+            <button
+              onClick={() => setModalOpen(true)}
               className="bg-iim-gold hover:bg-iim-teal text-white font-bold px-8 py-3 rounded-lg text-lg transition flex items-center justify-center gap-2"
             >
-              Acceder al Portal <ArrowRight size={18} />
-            </Link>
+              Inscríbete y asegura tu futuro <ArrowRight size={18} />
+            </button>
             <a
               href="#contacto"
               className="border-2 border-white text-white hover:bg-white hover:text-iim-blue font-bold px-8 py-3 rounded-lg text-lg transition"
@@ -192,16 +309,16 @@ export default function Landing() {
       {/* CTA */}
       <section className="iim-gradient text-white py-16 px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">¿Listo para ingresar?</h2>
+          <h2 className="text-3xl font-bold mb-4">¿Listo para asegurar tu futuro?</h2>
           <p className="text-blue-100 mb-8 text-lg">
-            Accede al portal escolar con tus credenciales asignadas.
+            Déjanos tus datos y te contactamos a la brevedad.
           </p>
-          <Link
-            to="/login"
+          <button
+            onClick={() => setModalOpen(true)}
             className="bg-iim-gold hover:bg-iim-teal text-white font-bold px-10 py-3 rounded-lg text-lg transition inline-flex items-center gap-2"
           >
-            Ingresar al Portal <ArrowRight size={18} />
-          </Link>
+            Inscríbete ahora <ArrowRight size={18} />
+          </button>
         </div>
       </section>
 
@@ -211,7 +328,6 @@ export default function Landing() {
           <h2 className="text-3xl font-bold text-iim-blue mb-4">Contacto</h2>
           <div className="w-16 h-1 bg-iim-gold mx-auto mb-8"></div>
 
-          {/* Logo en sección de contacto (fondo blanco — se ve perfecto) */}
           <div className="flex justify-center mb-6">
             <img src={logo} alt="Prepa IIM" className="h-16 w-auto object-contain" />
           </div>

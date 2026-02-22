@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.database import Base, engine
-from app.api.routes import auth, admin, maestro, alumno, padre
+from app.api.routes import auth, admin, maestro, alumno, padre, inscripciones
 
 # Import all models so SQLAlchemy registers them
-from app.models import user, alumno as alumno_model, maestro as maestro_model, padre as padre_model  # noqa
+from app.models import user, alumno as alumno_model, maestro as maestro_model, padre as padre_model, inscripcion as inscripcion_model  # noqa
 
 Base.metadata.create_all(bind=engine)
 
@@ -23,6 +23,7 @@ app.include_router(admin.router, prefix="/api")
 app.include_router(maestro.router, prefix="/api")
 app.include_router(alumno.router, prefix="/api")
 app.include_router(padre.router, prefix="/api")
+app.include_router(inscripciones.router, prefix="/api")
 
 
 @app.get("/health")
