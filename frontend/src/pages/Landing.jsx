@@ -58,12 +58,11 @@ export default function Landing() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
-            Formando líderes con<br />
-            <span className="text-iim-gold">visión intercultural</span>
+            Sin educación el mundo te cierra muchas puertas,<br />
+            <span className="text-iim-gold">pero nosotros te daremos la llave.</span>
           </h1>
           <p className="text-lg sm:text-xl text-blue-100 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Preparamos a nuestros alumnos con valores sólidos, conocimiento de excelencia
-            y una perspectiva global para enfrentar el mundo del siglo XXI.
+            Inscríbete y asegura tu futuro.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
