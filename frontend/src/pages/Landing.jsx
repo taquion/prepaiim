@@ -121,10 +121,9 @@ function InscripcionModal({ onClose }) {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Secundaria de procedencia</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Secundaria de procedencia <span className="text-gray-400 font-normal">(opcional)</span></label>
                 <input
                   type="text"
-                  required
                   placeholder="Nombre de tu secundaria"
                   value={form.secundaria}
                   onChange={e => setForm({ ...form, secundaria: e.target.value })}
