@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { Globe, Users, BookOpen, CreditCard, ArrowRight } from 'lucide-react'
+import { Users, BookOpen, CreditCard, ArrowRight } from 'lucide-react'
+import logo from '../assets/logo.jpg'
 
 const InstagramIcon = ({ size = 24 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -14,15 +15,9 @@ export default function Landing() {
     <div className="min-h-screen bg-white">
       {/* Navbar */}
       <nav className="bg-iim-blue text-white shadow-lg sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-iim-teal flex items-center justify-center">
-              <Globe size={20} className="text-white" />
-            </div>
-            <div>
-              <div className="text-lg font-bold leading-tight">Instituto Intercultural</div>
-              <div className="text-xs text-iim-gold font-medium">Monterrey, Pte.</div>
-            </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+          <div className="flex items-center">
+            <img src={logo} alt="Prepa IIM" className="h-12 w-auto object-contain brightness-0 invert" />
           </div>
           <div className="flex items-center gap-3">
             <a
@@ -37,7 +32,7 @@ export default function Landing() {
             </a>
             <Link
               to="/login"
-              className="bg-iim-gold hover:bg-yellow-500 text-white font-semibold px-5 py-2 rounded-lg transition flex items-center gap-2 text-sm"
+              className="bg-iim-gold hover:bg-iim-teal text-white font-semibold px-5 py-2 rounded-lg transition flex items-center gap-2 text-sm"
             >
               Portal Escolar <ArrowRight size={14} />
             </Link>
@@ -49,7 +44,7 @@ export default function Landing() {
       <section className="iim-gradient text-white py-24 px-4">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-sm mb-8 backdrop-blur-sm">
-            <Globe size={14} className="text-iim-gold" />
+            <img src={logo} alt="Prepa IIM" className="h-5 w-auto object-contain brightness-0 invert" />
             <span>Instituto Intercultural Monterrey, Pte.</span>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
@@ -63,7 +58,7 @@ export default function Landing() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/login"
-              className="bg-iim-gold hover:bg-yellow-500 text-white font-bold px-8 py-3 rounded-lg text-lg transition flex items-center justify-center gap-2"
+              className="bg-iim-gold hover:bg-iim-teal text-white font-bold px-8 py-3 rounded-lg text-lg transition flex items-center justify-center gap-2"
             >
               Acceder al Portal <ArrowRight size={18} />
             </Link>
@@ -106,32 +101,28 @@ export default function Landing() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                icon: <Users size={28} />,
                 emoji: '🏛️',
                 title: 'Administrativos',
                 desc: 'Gestión de pagos, adeudos, becas y vista general del plantel.',
                 color: 'border-iim-blue',
               },
               {
-                icon: <BookOpen size={28} />,
                 emoji: '👨🏫',
                 title: 'Maestros',
                 desc: 'Subida de contenido, tareas, exámenes y vaciado de calificaciones.',
                 color: 'border-iim-teal',
               },
               {
-                icon: <Globe size={28} />,
                 emoji: '🎓',
                 title: 'Alumnos',
                 desc: 'Avance por tetramestre, materias, calificaciones y tareas.',
                 color: 'border-iim-gold',
               },
               {
-                icon: <CreditCard size={28} />,
                 emoji: '👨👩👧',
                 title: 'Padres',
                 desc: 'Consulta de adeudos, pagos y calificaciones de sus hijos.',
-                color: 'border-purple-500',
+                color: 'border-iim-light',
               },
             ].map((f) => (
               <div
@@ -185,7 +176,7 @@ export default function Landing() {
           </p>
           <Link
             to="/login"
-            className="bg-iim-gold hover:bg-yellow-500 text-white font-bold px-10 py-3 rounded-lg text-lg transition inline-flex items-center gap-2"
+            className="bg-iim-gold hover:bg-iim-teal text-white font-bold px-10 py-3 rounded-lg text-lg transition inline-flex items-center gap-2"
           >
             Ingresar al Portal <ArrowRight size={18} />
           </Link>
@@ -225,6 +216,9 @@ export default function Landing() {
 
       {/* Footer */}
       <footer className="bg-iim-dark text-blue-200 py-6 text-center text-sm">
+        <div className="flex items-center justify-center gap-4 mb-3">
+          <img src={logo} alt="Prepa IIM" className="h-8 w-auto object-contain brightness-0 invert opacity-70" />
+        </div>
         <div className="flex items-center justify-center gap-4 mb-2">
           <a
             href="https://www.instagram.com/prepa_iim/"
