@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, X, CheckCircle, GraduationCap, Users, Thermometer, Shield, BadgeCheck, HandCoins } from 'lucide-react'
 import logo from '../assets/logo.jpg'
@@ -39,7 +39,14 @@ const GoogleMapsIcon = ({ size = 24 }) => (
 )
 
 function InscripcionModal({ onClose }) {
-  const [form, setForm] = useState({ nombre: '', telefono: '', secundaria: '' })
+  const saved = typeof window !== 'undefined'
+    ? JSON.parse(localStorage.getItem('iim_form') || '{}')
+    : {}
+  const [form, setForm] = useState({
+    nombre: saved.nombre || '',
+    telefono: saved.telefono || '',
+    secundaria: saved.secundaria || '',
+  })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
@@ -55,6 +62,7 @@ function InscripcionModal({ onClose }) {
         body: JSON.stringify(form),
       })
       if (!res.ok) throw new Error('Error al enviar')
+      localStorage.setItem('iim_form', JSON.stringify({ nombre: form.nombre, telefono: form.telefono, secundaria: form.secundaria }))
       setSuccess(true)
     } catch {
       setError('Hubo un problema. Intenta de nuevo.')
@@ -103,6 +111,8 @@ function InscripcionModal({ onClose }) {
                 <input
                   type="text"
                   required
+                  name="name"
+                  autoComplete="name"
                   placeholder="Tu nombre"
                   value={form.nombre}
                   onChange={e => setForm({ ...form, nombre: e.target.value })}
@@ -114,6 +124,8 @@ function InscripcionModal({ onClose }) {
                 <input
                   type="tel"
                   required
+                  name="tel"
+                  autoComplete="tel"
                   placeholder="81 1234 5678"
                   value={form.telefono}
                   onChange={e => setForm({ ...form, telefono: e.target.value })}
@@ -124,6 +136,8 @@ function InscripcionModal({ onClose }) {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Secundaria de procedencia <span className="text-gray-400 font-normal">(opcional)</span></label>
                 <input
                   type="text"
+                  name="organization"
+                  autoComplete="organization"
                   placeholder="Nombre de tu secundaria"
                   value={form.secundaria}
                   onChange={e => setForm({ ...form, secundaria: e.target.value })}
