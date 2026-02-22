@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Users, BookOpen, CreditCard, ArrowRight } from 'lucide-react'
 import logo from '../assets/logo.jpg'
+import bear from '../assets/bear.jpg'
 import sepBadge from '../assets/sep.jpg'
 
 const InstagramIcon = ({ size = 24 }) => (
@@ -18,8 +19,13 @@ export default function Landing() {
       <nav className="bg-iim-blue text-white shadow-lg sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-iim-teal flex items-center justify-center text-xl">
-              🐻
+            <div className="w-10 h-10 rounded-full bg-iim-teal flex items-center justify-center overflow-hidden">
+              <img
+                src={bear}
+                alt="Prepa IIM"
+                className="w-full h-full object-cover"
+                style={{ mixBlendMode: 'multiply' }}
+              />
             </div>
             <div>
               <div className="text-lg font-bold leading-tight">Instituto Intercultural</div>
