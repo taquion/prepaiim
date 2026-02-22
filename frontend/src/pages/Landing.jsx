@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, X, CheckCircle } from 'lucide-react'
 import logo from '../assets/logo.jpg'
 import bear from '../assets/bear.jpg'
+import bearWhite from '../assets/bear_white.png'
 import sepBadge from '../assets/sep.jpg'
 import foto1 from '../assets/foto1.jpg'
 import foto2 from '../assets/foto2.jpg'
@@ -172,12 +173,11 @@ export default function Landing() {
       <nav className="bg-iim-blue text-white shadow-lg sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-iim-teal flex items-center justify-center overflow-hidden">
+            <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center overflow-hidden">
               <img
-                src={bear}
+                src={bearWhite}
                 alt="Prepa IIM"
-                className="w-full h-full object-cover"
-                style={{ mixBlendMode: 'multiply' }}
+                className="w-full h-full object-contain p-1"
               />
             </div>
             <div>
