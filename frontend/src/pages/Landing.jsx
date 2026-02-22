@@ -271,8 +271,47 @@ export default function Landing() {
             <img src={logo} alt="Prepa IIM" className="h-16 w-auto object-contain" />
           </div>
 
-          <p className="text-gray-600 text-lg">Instituto Intercultural Monterrey, Pte.</p>
-          <p className="text-gray-500">Monterrey, Nuevo León, México</p>
+          <p className="text-gray-600 text-lg font-semibold">Instituto Intercultural Monterrey, Pte.</p>
+
+          {/* Datos de contacto */}
+          <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="https://wa.me/528124489796"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-5 py-3 shadow-sm hover:shadow-md hover:border-green-400 transition group"
+            >
+              <span className="text-2xl">💬</span>
+              <div className="text-left">
+                <div className="text-xs text-gray-400">WhatsApp</div>
+                <div className="text-sm font-bold text-gray-800">812 448 9796</div>
+              </div>
+            </a>
+            <a
+              href="tel:8111682424"
+              className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-5 py-3 shadow-sm hover:shadow-md hover:border-iim-teal transition group"
+            >
+              <span className="text-2xl">📞</span>
+              <div className="text-left">
+                <div className="text-xs text-gray-400">Teléfono</div>
+                <div className="text-sm font-bold text-gray-800">811 168 2424</div>
+              </div>
+            </a>
+          </div>
+
+          {/* Dirección */}
+          <div className="mt-4">
+            <a
+              href="https://maps.google.com/?q=Ave.+Cabezada+10907,+Col.+Barrio+Acero,+Solidaridad,+Monterrey,+NL"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-iim-teal hover:text-iim-blue transition text-sm font-medium"
+            >
+              <span>📍</span>
+              Ave. Cabezada 10907, Col. Barrio Acero, Solidaridad, Mty., NL
+              <span className="text-xs underline">Ver en Maps</span>
+            </a>
+          </div>
 
           {/* Redes sociales */}
           <div className="mt-10">
