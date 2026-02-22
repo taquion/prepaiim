@@ -176,8 +176,8 @@ export default function Landing() {
 
           {/* Logo más grande */}
           <div className="flex justify-center mb-8">
-            <div className="bg-white rounded-2xl shadow-xl px-10 py-6 inline-block">
-              <img src={logo} alt="Prepa IIM" className="h-28 w-auto object-contain" />
+            <div className="bg-white rounded-2xl shadow-xl px-10 py-6 flex items-center justify-center">
+              <img src={logo} alt="Prepa IIM" className="h-28 w-auto object-contain block" />
             </div>
           </div>
 
