@@ -490,7 +490,7 @@ export default function Landing() {
           {/* Datos de contacto */}
           <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="https://wa.me/528124489796"
+              href="https://wa.me/528124489796?text=Hola!%20Me%20gustar%C3%ADa%20informaci%C3%B3n%20sobre%20inscripciones!"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-4 bg-white border border-gray-200 rounded-2xl px-6 py-4 shadow-sm hover:shadow-md hover:border-green-400 transition"
@@ -568,7 +568,7 @@ export default function Landing() {
 
       {/* Botón flotante WhatsApp */}
       <a
-        href="https://wa.me/528124489796"
+        href="https://wa.me/528124489796?text=Hola!%20Me%20gustar%C3%ADa%20informaci%C3%B3n%20sobre%20inscripciones!"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-5 right-5 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center w-14 h-14"
