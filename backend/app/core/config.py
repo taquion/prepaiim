@@ -9,6 +9,7 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
+        extra = "ignore"   # allow extra vars (TG_TOKEN, etc.) without error
 
 
 settings = Settings()
