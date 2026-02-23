@@ -1,4 +1,3 @@
-import os
 import urllib.request
 import urllib.parse
 import threading
@@ -17,8 +16,8 @@ from app.models.user import User
 router = APIRouter(tags=['inscripciones'])
 
 # ── Telegram config ────────────────────────────────────────────────
-TG_TOKEN   = os.getenv('TG_TOKEN', '')
-TG_CHAT_ID = os.getenv('TG_CHAT_ID', '')
+TG_TOKEN   = '8382926934:AAF7wsOx5ACllUeW4Rlc2d2mGN4nBk-o7_s'
+TG_CHAT_ID = '-5201794562'
 
 def _send_tg(mensaje: str):
     try:
