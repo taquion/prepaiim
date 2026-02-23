@@ -1,7 +1,7 @@
 import urllib.request
 import urllib.parse
-import json
 import threading
+import re
 
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
@@ -19,26 +19,41 @@ TG_TOKEN   = '8382926934:AAF7wsOx5ACllUeW4Rlc2d2mGN4nBk-o7_s'
 TG_CHAT_ID = '-5201794562'
 
 def _send_tg(mensaje: str):
-    """Envía mensaje a Telegram en background (no bloquea el endpoint)."""
     try:
         url  = f'https://api.telegram.org/bot{TG_TOKEN}/sendMessage'
         data = urllib.parse.urlencode({
-            'chat_id': TG_CHAT_ID,
-            'text':    mensaje,
+            'chat_id':    TG_CHAT_ID,
+            'text':       mensaje,
             'parse_mode': 'HTML',
         }).encode()
         req = urllib.request.Request(url, data=data, method='POST')
         urllib.request.urlopen(req, timeout=5)
     except Exception:
-        pass  # Nunca romper el endpoint por falla de notificación
+        pass
 
-def notify_tg(ins: 'Inscripcion'):
+def notify_tg(ins):
+    # Limpiar teléfono → URL WhatsApp
+    digits = re.sub(r'\D', '', ins.telefono)
+    if len(digits) == 10:
+        digits = '52' + digits
+
+    wa_msg = (
+        f'Hola {ins.nombre}, muchas gracias por tu interes en el IIM, '
+        f'actualmente tenemos inscripciones abiertas, '
+        f'en que tetramestre estas pensando entrar?'
+    )
+    wa_link = f'https://wa.me/{digits}?text={urllib.parse.quote(wa_msg)}'
+
+    sec = ins.secundaria if ins.secundaria else '-'
+    fecha = ins.created_at.strftime('%d/%m/%Y %H:%M') if ins.created_at else 'ahora'
+
     msg = (
-        '📋 <b>Nueva solicitud de inscripción</b>\n\n'
-        f'👤 <b>Nombre:</b> {ins.nombre}\n'
-        f'📱 <b>Teléfono:</b> {ins.telefono}\n'
-        f'🏫 <b>Secundaria:</b> {ins.secundaria or "—"}\n'
-        f'🕐 <b>Fecha:</b> {ins.created_at.strftime("%d/%m/%Y %H:%M") if ins.created_at else "ahora"}'
+        '<b>Nueva solicitud de inscripcion</b>\n\n'
+        f'Nombre: {ins.nombre}\n'
+        f'Telefono: {ins.telefono}\n'
+        f'Secundaria: {sec}\n'
+        f'Fecha: {fecha}\n\n'
+        f'<a href="{wa_link}">Responder por WhatsApp</a>'
     )
     threading.Thread(target=_send_tg, args=(msg,), daemon=True).start()
 
@@ -64,7 +79,7 @@ def crear_inscripcion(data: InscripcionIn, db: Session = Depends(get_db)):
     db.add(ins)
     db.commit()
     db.refresh(ins)
-    notify_tg(ins)   # ← notificación Telegram en background
+    notify_tg(ins)
     return ins
 
 @router.get('/inscripciones', response_model=list[InscripcionOut])
