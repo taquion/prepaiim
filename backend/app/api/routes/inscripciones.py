@@ -40,7 +40,7 @@ def notify_tg(ins):
     wa_msg = (
         f'Hola {ins.nombre}, muchas gracias por tu interes en el IIM, '
         f'actualmente tenemos inscripciones abiertas, '
-        f'en que tetramestre estas pensando entrar?'
+        f'en que periodo estas pensando entrar, septiembre o enero?'
     )
     wa_link = f'https://wa.me/{digits}?text={urllib.parse.quote(wa_msg)}'
 
