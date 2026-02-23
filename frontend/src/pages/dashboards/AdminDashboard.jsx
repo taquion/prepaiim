@@ -7,6 +7,7 @@ const API = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 export default function AdminDashboard() {
   const [alumnos, setAlumnos] = useState([])
   const [adeudos, setAdeudos] = useState([])
+  const [inscripciones, setInscripciones] = useState([])
   const [activeTab, setActiveTab] = useState('alumnos')
   const [loading, setLoading] = useState(true)
 
@@ -14,6 +15,7 @@ export default function AdminDashboard() {
     Promise.all([
       axios.get(`${API}/api/admin/alumnos`).then((r) => setAlumnos(r.data)),
       axios.get(`${API}/api/admin/adeudos`).then((r) => setAdeudos(r.data)),
+      axios.get(`${API}/api/inscripciones`).then((r) => setInscripciones(r.data)).catch(() => {}),
     ]).finally(() => setLoading(false))
   }, [])
 
@@ -29,6 +31,7 @@ export default function AdminDashboard() {
           { label: 'Con Adeudos', value: pendientes, color: pendientes > 0 ? 'bg-red-500' : 'bg-green-500' },
           { label: 'Deuda Total', value: `$${totalDeuda.toLocaleString()}`, color: 'bg-iim-gold' },
           { label: 'Al Corriente', value: adeudos.length - pendientes, color: 'bg-iim-teal' },
+          { label: '📋 Leads Web', value: inscripciones.length, color: 'bg-orange-500' },
         ].map((s) => (
           <div key={s.label} className={`${s.color} text-white rounded-xl p-4 shadow`}>
             <div className="text-2xl font-bold">{s.value}</div>
@@ -43,6 +46,7 @@ export default function AdminDashboard() {
           {[
             { key: 'alumnos', label: '🎓 Alumnos' },
             { key: 'adeudos', label: '💰 Adeudos' },
+            { key: 'inscripciones', label: '📋 Inscripciones Web' },
           ].map((tab) => (
             <button
               key={tab.key}
@@ -86,7 +90,7 @@ export default function AdminDashboard() {
                 ))}
               </tbody>
             </table>
-          ) : (
+          ) : activeTab === 'adeudos' ? (
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-left text-gray-400 border-b text-xs uppercase tracking-wide">
@@ -113,7 +117,41 @@ export default function AdminDashboard() {
                 ))}
               </tbody>
             </table>
-          )}
+          ) : activeTab === 'inscripciones' ? (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <p className="text-sm text-gray-500">{inscripciones.length} lead(s) recibido(s) por el formulario web</p>
+                <span className="text-xs bg-orange-100 text-orange-700 px-3 py-1 rounded-full font-medium">Leads de inscripción</span>
+              </div>
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-gray-400 border-b text-xs uppercase tracking-wide">
+                    <th className="pb-3 pr-4">Nombre</th>
+                    <th className="pb-3 pr-4">Teléfono</th>
+                    <th className="pb-3 pr-4 hidden md:table-cell">Secundaria</th>
+                    <th className="pb-3">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {inscripciones.length === 0 ? (
+                    <tr><td colSpan={4} className="py-6 text-center text-gray-400">Sin solicitudes aún</td></tr>
+                  ) : inscripciones.map((ins) => (
+                    <tr key={ins.id} className="border-b hover:bg-gray-50 transition">
+                      <td className="py-3 pr-4 font-medium">{ins.nombre}</td>
+                      <td className="py-3 pr-4">
+                        <a href={`https://wa.me/52${ins.telefono.replace(/\D/g,'')}`} target="_blank" rel="noopener noreferrer"
+                           className="text-green-600 hover:underline font-medium flex items-center gap-1">
+                          📱 {ins.telefono}
+                        </a>
+                      </td>
+                      <td className="py-3 pr-4 text-gray-500 hidden md:table-cell">{ins.secundaria || '—'}</td>
+                      <td className="py-3 text-gray-400 text-xs">{new Date(ins.created_at).toLocaleDateString('es-MX', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' })}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : null}
         </div>
       </div>
     </DashboardLayout>
