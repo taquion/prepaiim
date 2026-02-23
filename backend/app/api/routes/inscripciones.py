@@ -5,7 +5,8 @@ import re
 
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.models.inscripcion import Inscripcion
@@ -45,7 +46,9 @@ def notify_tg(ins):
     wa_link = f'https://wa.me/{digits}?text={urllib.parse.quote(wa_msg)}'
 
     sec = ins.secundaria if ins.secundaria else '-'
-    fecha = ins.created_at.strftime('%d/%m/%Y %H:%M') if ins.created_at else 'ahora'
+    mty = ZoneInfo('America/Monterrey')
+    fecha_local = ins.created_at.replace(tzinfo=timezone.utc).astimezone(mty) if ins.created_at else None
+    fecha = fecha_local.strftime('%d/%m/%Y %H:%M') + ' (MTY)' if fecha_local else 'ahora'
 
     msg = (
         '<b>Nueva solicitud de inscripcion</b>\n\n'
