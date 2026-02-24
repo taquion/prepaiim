@@ -20,8 +20,8 @@ export default function Login() {
       const user = await login(email, password)
       const routes = { admin: '/admin', maestro: '/maestro', alumno: '/alumno', padre: '/padre' }
       navigate(routes[user.role] || '/')
-    } catch {
-      setError('Credenciales incorrectas. Verifica tu email y contraseña.')
+    } catch (err) {
+      setError(err?.response?.status === 401 ? 'Credenciales incorrectas. Verifica tu email y contraseña.' : 'Error de conexión. Intenta de nuevo.')
     } finally {
       setLoading(false)
     }
