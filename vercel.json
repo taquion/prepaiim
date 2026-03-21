@@ -1,11 +1,15 @@
 {
   "buildCommand": "cd frontend && npm install && npm run build",
   "outputDirectory": "frontend/dist",
-  "framework": "vite",
+  "functions": {
+    "api/index.py": {
+      "runtime": "@vercel/python@4.5.0",
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://prepaiim.com/api/:path*" },
-    { "source": "/health", "destination": "https://prepaiim.com/health" },
-    { "source": "/docs", "destination": "https://prepaiim.com/docs" },
-    { "source": "/((?!api|assets|health|docs).*)", "destination": "/index.html" }
+    { "source": "/api/:path*", "destination": "/api/index" },
+    { "source": "/health", "destination": "/api/index" },
+    { "source": "/((?!api|assets|health).*)", "destination": "/index.html" }
   ]
 }
