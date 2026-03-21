@@ -5,6 +5,7 @@
   "rewrites": [
     { "source": "/api/:path*", "destination": "https://prepaiim.com/api/:path*" },
     { "source": "/health", "destination": "https://prepaiim.com/health" },
-    { "source": "/docs", "destination": "https://prepaiim.com/docs" }
+    { "source": "/docs", "destination": "https://prepaiim.com/docs" },
+    { "source": "/((?!api|assets|health|docs).*)", "destination": "/index.html" }
   ]
 }
