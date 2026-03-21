@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import DashboardLayout from '../../components/DashboardLayout'
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API = import.meta.env.VITE_API_URL || ''
 
 function GradeBar({ value }) {
   const pct = ((value / 10) * 100).toFixed(0)

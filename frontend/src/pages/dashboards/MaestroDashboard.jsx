@@ -6,7 +6,7 @@ import {
   Clock, Save, Loader, AlertCircle, FileText
 } from 'lucide-react'
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API = import.meta.env.VITE_API_URL || ''
 
 // ─── Vista 1: Tarjetas de materias ────────────────────────────────────────────
 function MisMaterias({ onSelectMateria }) {

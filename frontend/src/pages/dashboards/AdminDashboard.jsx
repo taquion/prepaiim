@@ -3,7 +3,7 @@ import axios from 'axios'
 import DashboardLayout from '../../components/DashboardLayout'
 import { Plus, Trash2, CheckCircle, BookOpen, Calendar, Link2, Loader, X } from 'lucide-react'
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+const API = import.meta.env.VITE_API_URL || ''
 
 // ─── Sub-sección: Periodos ────────────────────────────────────────────────────
 function PeriodosPanel() {

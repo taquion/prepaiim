@@ -1,0 +1,10 @@
+{
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://prepaiim.com/api/:path*" },
+    { "source": "/health", "destination": "https://prepaiim.com/health" },
+    { "source": "/docs", "destination": "https://prepaiim.com/docs" }
+  ]
+}
